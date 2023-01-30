@@ -28,4 +28,4 @@ app.listen(app.get("port"), () => {
 
 app.use(require("./routes/promocionesHogar/excelToJson"));
 
-app.use(require("./routes/ejemplo/ejemplo"))
+

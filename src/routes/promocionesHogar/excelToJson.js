@@ -16,7 +16,12 @@ router.get("/allData", (req, res) => {
 
 //? ---------Convertir excel a Json----------
 
+router.post("/updateExcel",(req, res)=>{
+  const archivo=req;
+  const query= "INSERT INTO matrizhogar ()value (?)"
 
+  
+})
 
 
 
