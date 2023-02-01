@@ -24,7 +24,7 @@ router.get("/allData", (req, res) => {
 //! ---------Convertir excel a Json y guardar en DB----------
 //localhost:3200/updateExcel/
 var upload = multer({ dest: "uploads/" });
-router.post("/updateExcel", upload.single("file"), (req, res) => {
+router.post("/updateExcel", upload.single("archivo"), (req, res) => {
   const insertQuery =
     "INSERT INTO matrizhogar (ano, mes, promocion, andina, costa, sur, bogota, tiendas, televentas, digital, fvd, retail, dealer, description, tipocliente, region, vigencia, observacion, adjunto) VALUES (?)";
   const truncateQuery = "TRUNCATE TABLE matrizhogar";
@@ -42,58 +42,62 @@ router.post("/updateExcel", upload.single("file"), (req, res) => {
           "*": "{{columnHeader}}",
         },
       });
-      
+     
+
       let data = [];
       let matriz = excelData.Matriz;
       fs.remove(filepath);
 
       //?Se crea modelo para insercion de datos
-      const modelo={
-        ano:"",
-        mes:"",
-        promocion:"",
-        andina:"",
-        costa:"",
-        sur:"",
-        bogota:"",
-        tiendas:"",
-        televentas:"",
-        digital:"",
-        fvd:"",
-        retail:"",
-        dealer:"",
-        descripcion:"",
-        tipocliente:"",
-        region:"",
-        vigencia:"",
-        observaciones:"",
-        adjunto:"",
-       }
-      //?Se obtienen los datos del Json segun el modelo y se meten en una Variable
+      const modelo = {
+        ano: "",
+        mes: "",
+        promocion: "",
+        andina: "",
+        costa: "",
+        sur: "",
+        bogota: "",
+        tiendas: "",
+        televentas: "",
+        digital: "",
+        fvd: "",
+        retail: "",
+        dealer: "",
+        descripcion: "",
+        tipocliente: "",
+        region: "",
+        vigencia: "",
+        observaciones: "",
+        adjunto: "",
+      };
+      //?Se obtienen los datos del Json segun el modelo y se meten en una Variable 'data'
       matriz.forEach((e) => {
-        modelo.ano=String(e.ANO) || ''
-        modelo.mes=e.MES || ''
-        modelo.promocion=e.PROMOCION || '' 
-        modelo.andina=String(e.ANDINA) || ''
-        modelo.costa=String(e.COSTA) || ''
-        modelo.sur=String(e.SUR )|| ''
-        modelo.bogota=String(e.BOGOTA) || ''
-        modelo.tiendas=String(e.Tiendas)  || ''
-        modelo.televentas=String(e.Televentas) || ''
-        modelo.digital=String(e.Digital) || ''
-        modelo.fvd=String(e.FVD)  || ''
-        modelo.retail=String(e.Retail) || ''
-        modelo.dealer=String(e.Dealer) || ''
-        modelo.descripcion=e.DESCRIPCION || ''
-        modelo.tipocliente=e.TIPOCLIENTE || ''
-        modelo.region=e.REGION || ''
-        modelo.vigencia=e.Vigencia || ''
-        modelo.observaciones=e.Observaciones || ''
-        modelo.adjunto=e.Adjunto || ''
-         data.push(Object.values(modelo))
+        modelo.ano = String(e.ANO) || "";
+        modelo.mes = e.MES || "";
+        modelo.promocion = e.PROMOCION || "";
+        modelo.andina = String(e.ANDINA) || "";
+        modelo.costa = String(e.COSTA) || "";
+        modelo.sur = String(e.SUR) || "";
+        modelo.bogota = String(e.BOGOTA) || "";
+        modelo.tiendas = String(e.Tiendas) || "";
+        modelo.televentas = String(e.Televentas) || "";
+        modelo.digital = String(e.Digital) || "";
+        modelo.fvd = String(e.FVD) || "";
+        modelo.retail = String(e.Retail) || "";
+        modelo.dealer = String(e.Dealer) || "";
+        modelo.descripcion = e.DESCRIPCION || "";
+        modelo.tipocliente = e.TIPOCLIENTE || "";
+        modelo.region = e.REGION || "";
+        modelo.vigencia = e.Vigencia || "";
+        modelo.observaciones = e.Observaciones || "";
+        modelo.adjunto = e.Adjunto || "";
+        data.push(Object.values(modelo));
       });
 
-      // //? Se realiza TRUNCATE en la DB
+     
+      
+
+      //? Se realiza TRUNCATE en la DB
       mySqlConnection.query(truncateQuery, (err, rows, fields) => {
         if (err) {
           console.log(err);
@@ -101,7 +105,6 @@ router.post("/updateExcel", upload.single("file"), (req, res) => {
       });
 
       //? se realiza INSERT en la DB
-
       data.forEach(row=>{
         mySqlConnection.query(insertQuery,[row], (err) => {
           if (err) {
@@ -109,12 +112,15 @@ router.post("/updateExcel", upload.single("file"), (req, res) => {
           }
         });
       })
-      
-      res.status(200).send(data);
+
+
+      res.status(200).send('Se Actualizo la data exitosamente');
     }
   } catch (error) {
-    res.status(500);
+    res.status(500).send(error,'Se ha Producido un Error, vuelve a intentar');
   }
 });
+
+
 
 module.exports = router;

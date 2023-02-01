@@ -9,9 +9,11 @@ const whiteList = ["http://localhost:3000"];
 app.use(express.json()); // for parsing application/json
 
 app.use(
-  cors({
-    origin: whiteList,
-  })
+  cors(
+  //   {
+  //   origin: whiteList,
+  // }
+  )
 );
 
 app.listen(app.get("port"), () => {
@@ -26,6 +28,7 @@ app.listen(app.get("port"), () => {
 
 //?--------Ruta de PromoHogares--------
 
-app.use(require("./routes/promocionesHogar/excelToJson"));
+app.use(require("./routes/MatrizUpsellingPremium/excelToJson"));
+app.use(require("./routes/MatrizUpsellingPremium/uploadPDF"));
 
 
