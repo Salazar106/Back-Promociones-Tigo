@@ -25,8 +25,10 @@ router.get("/allData", (req, res) => {
 //localhost:3200/updateExcel/
 var upload = multer({ dest: "uploads/" });
 router.post("/updateExcel", upload.single("archivo"), (req, res) => {
+  //Query para insersion de Data en la DB
   const insertQuery =
     "INSERT INTO matrizhogar (ano, mes, promocion, andina, costa, sur, bogota, tiendas, televentas, digital, fvd, retail, dealer, description, tipocliente, region, vigencia, observacion, adjunto) VALUES (?)";
+    //Query para limpiar la tabla mediante TRUNCATE
   const truncateQuery = "TRUNCATE TABLE matrizhogar";
   try {
     if (req.file?.filename == null || req.file?.filename == "undefined") {
