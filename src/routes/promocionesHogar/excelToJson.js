@@ -8,7 +8,7 @@ const excelToJson = require("convert-excel-to-json");
 const { json } = require("express");
 const { end } = require("../../conexion");
 
-//? ---------buscamos todos los datos---------
+//! ---------buscamos todos los datos---------
 //localhost:3200/allData/
 router.get("/allData", (req, res) => {
   const query = "SELECT * FROM matrizHogar";
@@ -21,13 +21,12 @@ router.get("/allData", (req, res) => {
   });
 });
 
-//? ---------Convertir excel a Json----------
+//! ---------Convertir excel a Json y guardar en DB----------
 //localhost:3200/updateExcel/
-
 var upload = multer({ dest: "uploads/" });
 router.post("/updateExcel", upload.single("file"), (req, res) => {
   const insertQuery =
-    "INSERT INTO matrizhogar (ano, mes, promocion, andina, costa, sur, bogota, tiendas, televentas, digital, fvd, retail, dealer, description, tipocliente, region, vigencia, adjunto, observacion) VALUES (?)";
+    "INSERT INTO matrizhogar (ano, mes, promocion, andina, costa, sur, bogota, tiendas, televentas, digital, fvd, retail, dealer, description, tipocliente, region, vigencia, observacion, adjunto) VALUES (?)";
   const truncateQuery = "TRUNCATE TABLE matrizhogar";
   try {
     if (req.file?.filename == null || req.file?.filename == "undefined") {
@@ -43,12 +42,12 @@ router.post("/updateExcel", upload.single("file"), (req, res) => {
           "*": "{{columnHeader}}",
         },
       });
-      let a = [];
+      
       let data = [];
-      let espaciosFaltantes = [" ", " "];
       let matriz = excelData.Matriz;
       fs.remove(filepath);
 
+      //?Se crea modelo para insercion de datos
       const modelo={
         ano:"",
         mes:"",
@@ -70,7 +69,7 @@ router.post("/updateExcel", upload.single("file"), (req, res) => {
         observaciones:"",
         adjunto:"",
        }
-
+      //?Se obtienen los datos del Json segun el modelo y se meten en una Variable
       matriz.forEach((e) => {
         modelo.ano=String(e.ANO) || ''
         modelo.mes=e.MES || ''
@@ -94,14 +93,14 @@ router.post("/updateExcel", upload.single("file"), (req, res) => {
          data.push(Object.values(modelo))
       });
 
-      // //? se realiza truncate de la tabla
+      // //? Se realiza TRUNCATE en la DB
       mySqlConnection.query(truncateQuery, (err, rows, fields) => {
         if (err) {
           console.log(err);
         }
       });
 
-      //? se realiza insercion de datos
+      //? se realiza INSERT en la DB
 
       data.forEach(row=>{
         mySqlConnection.query(insertQuery,[row], (err) => {
