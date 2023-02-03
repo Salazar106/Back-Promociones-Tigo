@@ -4,7 +4,7 @@ const app = express(); // create express app
 const cors = require("cors");
 
 app.set("port", process.env.PORT || 3200); // set the port
-const whiteList = ["http://localhost:3000"];
+const whiteList = ["http://locahost:3000"];
 
 app.use(express.json()); // for parsing application/json
 
