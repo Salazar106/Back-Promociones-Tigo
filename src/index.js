@@ -30,5 +30,5 @@ app.listen(app.get("port"), () => {
 
 app.use(require("./routes/MatrizUpsellingPremium/excelToJson"));
 app.use(require("./routes/MatrizUpsellingPremium/uploadPDF"));
-
+app.use(require("./routes/auth/login"))
 
