@@ -3,8 +3,8 @@ const express = require("express"); // import express
 const app = express(); // create express app
 const cors = require("cors");
 
-app.set("port", process.env.PORT || 3200); // set the port
-const whiteList = ["http://locahost:3000"];
+app.set("port", process.env.PORT || 2800); // set the port
+const whiteList = ["http://locahost:2800"];
 
 app.use(express.json()); // for parsing application/json
 
