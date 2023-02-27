@@ -17,10 +17,10 @@ app.use(
 );
 
 app.listen(app.get("port"), () => {
+
   console.log("")
-  console.log("")
-  console.log("*****************************************************");
-  console.log("*   🖥️  Servidor establecido en el puerto:", app.get("port") , "🖥️   *");
+  console.log("*********************************************************");
+  console.log("🟡 🟡 🟡 Servidor establecido en el puerto:", app.get("port") , "🟡 🟡 🟡");
 }); //poner en el puerto 3000
 
 //!----------- Rutas--------------

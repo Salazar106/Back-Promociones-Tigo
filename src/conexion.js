@@ -3,9 +3,8 @@ const mysql2 = require("mysql2");
 const mySqlConnection = mysql2.createConnection({
   host: "localhost",
   user: "root",
-  password: "nabxdyr0PT",
+  password: "",
   database: "mydb",
-  
 });
 
 mySqlConnection.connect(function (err) {
@@ -17,9 +16,8 @@ mySqlConnection.connect(function (err) {
     console.log("*************************************************");
     return;
   } else {
-    console.log("")
-    console.log("*   🟢 Conexión a la base de datos establecida 🟢   *");
-    console.log("*****************************************************");
+    console.log("🟢 🟢 🟢 Conexión a la base de datos establecida 🟢 🟢 🟢");
+    console.log("*********************************************************");
   }
 });
 
