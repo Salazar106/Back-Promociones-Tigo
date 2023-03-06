@@ -27,7 +27,7 @@ app.listen(app.get("port"), () => {
 
 
 //?--------Ruta de PromoHogares--------
-
+app.use(require("./routes/Favoritos/favoritos"));
 app.use(require("./routes/MatrizUpsellingPremium/excelToJson"));
 app.use(require("./routes/MatrizUpsellingPremium/uploadPDF"));
 app.use(require("./routes/auth/login"))

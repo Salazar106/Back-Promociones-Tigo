@@ -107,16 +107,16 @@ router.post("/login2", (req, res) => {
     if (!err) {
       if (row.length >= 1 && row[0].estado === "Activo") {
         comparar(documento, password, row);
-      } else if(row.length >= 1 && row[0].estado === "Inactivo"){
+      } else if (row.length >= 1 && row[0].estado === "Inactivo") {
         res.status(200).send({
-          msg:'Usuario Inactivo',
-          login:false
-        })
-      } else{
+          msg: "Usuario Inactivo",
+          login: false,
+        });
+      } else {
         res.status(200).send({
-          msg:'Usuario no registrado',
-          login:false
-        })
+          msg: "Usuario no registrado",
+          login: false,
+        });
       }
     } else {
       res.send("Error, Vuelve a intentarlo");
