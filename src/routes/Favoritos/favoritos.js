@@ -45,8 +45,10 @@ router.post("/updateFavoritos", upload.single("archivo"), (req, res) => {
         },
       });
       if (Object.keys(excelData)[0] != "Favoritos") {
-        res.send(
-          "El Archivo que montaste no pertenece al formato establecido, revisa y vuelve a intentar."
+        res.json({
+          status:201,
+          msg:"El Archivo que montaste no pertenece al formato establecido!"
+        }
         );
       } else {
         const hoy=new Date();
@@ -88,7 +90,7 @@ router.post("/updateFavoritos", upload.single("archivo"), (req, res) => {
             });
           }
         });
-        res.status(200).send({ msg: "Se Actualizo la tabla de Favoritos exitosamente" });
+        res.status(200).json({ msg: "Se Actualizo la tabla de Favoritos exitosamente" });
       }
     }
   } catch (error) {

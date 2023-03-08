@@ -87,7 +87,7 @@ router.post("/login2", (req, res) => {
           },
           "nielpe12",
           (err, token) => {
-            res.json({
+            res.status(200).json({
               accesos: acces,
               documento: documento,
               estado: row[0].estado,
@@ -100,7 +100,7 @@ router.post("/login2", (req, res) => {
         );
       } else {
         res.status(200).json({
-          status: "Contraseña Incorrecta",
+          msg: "Contraseña Incorrecta",
           login: false,
         });
       }
@@ -113,18 +113,20 @@ router.post("/login2", (req, res) => {
       if (row.length >= 1 && row[0].estado === "A") {
         comparar(documento, password, row);
       } else if (row.length >= 1 && row[0].estado === "I") {
-        res.status(200).send({
+        res.status(200).json({
           msg: "Usuario Inactivo",
           login: false,
         });
-      } else {
-        res.status(200).send({
-          msg: "Usuario no registrado",
-          login: false,
-        });
-      }
+      } 
+      // else {
+      //   res.json({
+      //     status:200,
+      //     msg: "Usuario no registrado",
+      //     login: false,
+      //   });
+      // }
     } else {
-      res.send("Error, Vuelve a intentarlo");
+      res.status(200).json({msg:"Usuario no Registrado"});
     }
   });
 });
