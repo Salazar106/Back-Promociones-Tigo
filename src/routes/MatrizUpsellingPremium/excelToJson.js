@@ -34,6 +34,7 @@ router.post("/updateExcel", upload.single("archivo"), (req, res) => {
           status: 201,
           msg: "El Archivo que montaste no pertenece al formato establecido!",
         });
+        fs.remove(filepath);
       } else {
         const EspecialChatarters = /[\^*@!"#$%&/()=?¡!¿'\\]/gi; //Caracteres especiales que se desean eliminar
         let data = [];
@@ -108,9 +109,6 @@ router.post("/updateExcel", upload.single("archivo"), (req, res) => {
             console.log(err);
           }
         });
-        console.table(data);
-        console.table(validateData);
-
         // se realiza INSERT en la DB
         validateData.forEach((row) => {
           mySqlConnection.query(insertQuery, [row], (err) => {
@@ -121,11 +119,12 @@ router.post("/updateExcel", upload.single("archivo"), (req, res) => {
           });
         });
 
-        res.status(200).send({ msg: "Se Actualizo la data exitosamente" });
+        res.status(200).send({ msg: "Se Actualizo la MATRIZ exitosamente" });
       }
     }
   } catch (error) {
     res.status(500).send(error, "Se ha Producido un Error, vuelve a intentar");
+    fs.remove(filepath);
   }
 });
 

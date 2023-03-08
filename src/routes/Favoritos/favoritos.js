@@ -50,6 +50,7 @@ router.post("/updateFavoritos", upload.single("archivo"), (req, res) => {
           msg:"El Archivo que montaste no pertenece al formato establecido!"
         }
         );
+        fs.remove(filepath);
       } else {
         const hoy=new Date();
         const fecha= hoy.getFullYear()+"-"+hoy.getMonth()+"-"+hoy.getDate()+" "+hoy.getHours()+":"+hoy.getMinutes()+":"+hoy.getSeconds() 
@@ -95,6 +96,7 @@ router.post("/updateFavoritos", upload.single("archivo"), (req, res) => {
     }
   } catch (error) {
     res.send("Se ha Producido un Error, vuelve a intentar");
+    fs.remove(filepath);
   }
 });
 

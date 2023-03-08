@@ -126,7 +126,7 @@ router.post("/login2", (req, res) => {
       //   });
       // }
     } else {
-      res.status(200).json({msg:"Usuario no Registrado"});
+      res.status(200).json({msg:"Usuario no Registrado", login:false});
     }
   });
 });
